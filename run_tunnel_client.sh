@@ -2,4 +2,4 @@
 
 source config.sh
 
-echo "Tun Server: " 
+echo "Tun Server: " $TUN_SERVER
