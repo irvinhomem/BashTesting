@@ -13,4 +13,5 @@ cat /proc/sys/net/ipv4/ip_forward
 #cat /proc/net/dev
 
 iptables -t nat -A POSTROUTING -o $TUN_ETH_NIC -j MASQUERADE
-iptables -A FORWARD -i $TUN_ETH_NIC -o dns0 -m state --state RELATED,ESTABLISHED
+iptables -A FORWARD -i $TUN_ETH_NIC -o dns0 -m state --state RELATED,ESTABLISHED -j ACCEPT
+iptables -A FORWARD -i dns0 -o $TUN_ETH_NIC -j ACCEPT
