@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Make sure that config.sh is "executable" by running
-#chmod u+x ./config.sh
+#chmod u+x config.sh
 # Get/initialize/run declared variables from config.sh
 source config.sh
 #. ./config.sh
