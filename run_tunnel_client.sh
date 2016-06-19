@@ -10,6 +10,8 @@ echo "### Hopefully this is running on the CLIENT side ! ###"
 echo "Tun Server: " ${tun_server}
 
 # Run the Tunnel client commands
+#   Needs to run as sudo
+iodine -P ${passwd} ${tun_domain}
 
 #Fix the routing
 # 1. Add a route to the DNS server through the normal ethernet default gateway
