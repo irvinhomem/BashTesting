@@ -13,9 +13,12 @@ echo "Tun Server: " ${tun_server}
 
 #Fix the routing
 # 1. Add a route to the DNS server through the normal ethernet default gateway
-
+#   Needs to run as sudo
+route add -host ${local_dns} gw ${def_gw}
 # 2. Remove the current default gateway (to make sure that all traffic goes through the tunnel interface)
-
+#   Needs to run as sudo
+route del default
 # 3. Add the tunnel interface as the default gateway
-
+#   Needs to run as sudo
+route add default dev ${dns_tun_if} gw ${inside_tun_server}
 # Ping google.com to see if there is communication happening through the tunnel (watch the response on the server side)
