@@ -23,4 +23,10 @@ route del default
 # 3. Add the tunnel interface as the default gateway
 #   Needs to run as sudo
 route add default dev ${dns_tun_if} gw ${inside_tun_server}
+
+# TEST
+echo "Checking if tunnel has been set up: ..."
+# Ping tunnel server end to see if tunnel is working
+ping -c 2 ${inside_tun_server} ; echo $?
 # Ping google.com to see if there is communication happening through the tunnel (watch the response on the server side)
+ping -c 4 google.com ; echo $?
