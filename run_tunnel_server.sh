@@ -7,3 +7,6 @@
 source config.sh
 echo "--"
 echo "### Hopefully this is running on the SERVER side ! ###"
+
+# Run tunnel server commands
+iodined -c -D ${inside_tun_server} ${tun_domain}
