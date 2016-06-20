@@ -18,7 +18,7 @@ sleep 10
 
 #Check if the "dns0" interface has come up
 for net_if in $(ls -1 /sys/class/net) ;do
-  if[[ ${net_if} == *"dns0"* ]]
+  if [[ ${net_if} == *"dns0"* ]]
   then
     # Fix the routing
     # 1. Add a route to the DNS server through the normal ethernet default gateway
