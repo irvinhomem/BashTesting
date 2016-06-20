@@ -14,8 +14,8 @@ echo "Tun Server: " ${tun_server}
 iodine -P ${passwd} ${tun_domain}
 
 # Delay commands for fixing the routing so that the interfaces are set up and things don't fail
-echo "Delaying for 10 seconds as interfaces get set up ..."
-sleep 10
+echo "Delaying for 20 seconds as interfaces get set up ..."
+sleep 20
 
 #Check if the "dns0" interface has come up
 for net_if in $(ls -1 /sys/class/net) ;do
@@ -34,7 +34,7 @@ for net_if in $(ls -1 /sys/class/net) ;do
     # 3. Add the tunnel interface as the default gateway
     #   Needs to run as sudo
 
-    sleep 5
+    sleep 10
     route add default dev ${dns_tun_if} gw ${inside_tun_server}
 
     echo "Delay for 30 sec ... waiting for routing table to be updated correctly"
