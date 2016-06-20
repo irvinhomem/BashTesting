@@ -27,6 +27,7 @@ for net_if in $(ls -1 /sys/class/net) ;do
     route add -host ${local_dns} gw ${def_gw}
     # 2. Remove the current default gateway (to make sure that all traffic goes through the tunnel interface)
     #   Needs to run as sudo
+    
     sleep 5
     route del default
     # 3. Add the tunnel interface as the default gateway
@@ -37,6 +38,7 @@ for net_if in $(ls -1 /sys/class/net) ;do
 
     echo "Delay for 10 sec ..."
     sleep 10
+
     # TEST
     echo "Checking if tunnel has been set up: ..."
     # Ping tunnel server end to see if tunnel is working
