@@ -13,20 +13,32 @@ echo "Tun Server: " ${tun_server}
 #   Needs to run as sudo
 iodine -P ${passwd} ${tun_domain}
 
-#Fix the routing
-# 1. Add a route to the DNS server through the normal ethernet default gateway
-#   Needs to run as sudo
-route add -host ${local_dns} gw ${def_gw}
-# 2. Remove the current default gateway (to make sure that all traffic goes through the tunnel interface)
-#   Needs to run as sudo
-route del default
-# 3. Add the tunnel interface as the default gateway
-#   Needs to run as sudo
-route add default dev ${dns_tun_if} gw ${inside_tun_server}
+# Delay commands for fixing the routing so that the interfaces are set up and things don't fail
+sleep 10
 
-# TEST
-echo "Checking if tunnel has been set up: ..."
-# Ping tunnel server end to see if tunnel is working
-ping -c 2 ${inside_tun_server} ; echo $?
-# Ping google.com to see if there is communication happening through the tunnel (watch the response on the server side)
-ping -c 4 google.com ; echo $?
+#Check if the "dns0" interface has come up
+for net_if in $(ls -1 /sys/class/net) ;do
+  if[[ ${net_if} == *"dns0"* ]]
+  then
+    # Fix the routing
+    # 1. Add a route to the DNS server through the normal ethernet default gateway
+    #   Needs to run as sudo
+    route add -host ${local_dns} gw ${def_gw}
+    # 2. Remove the current default gateway (to make sure that all traffic goes through the tunnel interface)
+    #   Needs to run as sudo
+    route del default
+    # 3. Add the tunnel interface as the default gateway
+    #   Needs to run as sudo
+    route add default dev ${dns_tun_if} gw ${inside_tun_server}
+
+    # TEST
+    echo "Checking if tunnel has been set up: ..."
+    # Ping tunnel server end to see if tunnel is working
+    ping -c 2 ${inside_tun_server} ; echo $?
+    # Ping google.com to see if there is communication happening through the tunnel (watch the response on the server side)
+    ping -c 4 google.com ; echo $?
+  else
+    echo ${net_if}
+    #echo "Tunnel Interface possibly not created yet..."
+  fi
+done
