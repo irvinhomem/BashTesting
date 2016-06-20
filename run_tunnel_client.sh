@@ -18,7 +18,7 @@ sleep 10
 
 #Check if the "dns0" interface has come up
 for net_if in $(ls -1 /sys/class/net) ;do
-  if [[ ${net_if} == *"dns0"* ]]
+  if [[ ${net_if} == *"dns"* ]]   #Check if it contains the string "dns"
   then
     echo "DNS Tunnel interface created"
     # Fix the routing
