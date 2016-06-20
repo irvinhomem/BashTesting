@@ -35,6 +35,8 @@ for net_if in $(ls -1 /sys/class/net) ;do
     sleep 5
     route add default dev ${dns_tun_if} gw ${inside_tun_server}
 
+    echo "Delay for 10 sec ..."
+    sleep 10
     # TEST
     echo "Checking if tunnel has been set up: ..."
     # Ping tunnel server end to see if tunnel is working
