@@ -43,7 +43,7 @@ then
       # 3. Add the tunnel interface as the default gateway
       #   Needs to run as sudo
 
-      sleep 10
+      sleep 20
       route add default dev ${dns_tun_if} gw ${inside_tun_server}
 
       echo "Delay for 10 sec ... waiting for routing table to be updated correctly"
@@ -53,8 +53,11 @@ then
       route
 
       # TEST
+      echo "============================"
+      echo "Testing PING to Google"
       # Ping google.com to see if there is communication happening through the tunnel (watch the response on the server side)
       ping -c 4 google.com ; echo $?
+      echo "============================"
     else
       echo ${net_if}
       #echo "Tunnel Interface possibly not created yet..."
