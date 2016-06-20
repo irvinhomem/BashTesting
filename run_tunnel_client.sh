@@ -14,6 +14,7 @@ echo "Tun Server: " ${tun_server}
 iodine -P ${passwd} ${tun_domain}
 
 # Delay commands for fixing the routing so that the interfaces are set up and things don't fail
+echo "Delaying for 10 seconds as interfaces get set up ..."
 sleep 10
 
 #Check if the "dns0" interface has come up
@@ -27,7 +28,7 @@ for net_if in $(ls -1 /sys/class/net) ;do
     route add -host ${local_dns} gw ${def_gw}
     # 2. Remove the current default gateway (to make sure that all traffic goes through the tunnel interface)
     #   Needs to run as sudo
-    
+
     sleep 5
     route del default
     # 3. Add the tunnel interface as the default gateway
@@ -36,11 +37,14 @@ for net_if in $(ls -1 /sys/class/net) ;do
     sleep 5
     route add default dev ${dns_tun_if} gw ${inside_tun_server}
 
-    echo "Delay for 10 sec ..."
-    sleep 10
+    echo "Delay for 30 sec ... waiting for routing table to be updated correctly"
+    sleep 30
+
+    # Show routing table
+    route
 
     # TEST
-    echo "Checking if tunnel has been set up: ..."
+    echo "Checking if tunnel has been set up: ... Start PING tests"
     # Ping tunnel server end to see if tunnel is working
     ping -c 2 ${inside_tun_server} ; echo $?
     # Ping google.com to see if there is communication happening through the tunnel (watch the response on the server side)
