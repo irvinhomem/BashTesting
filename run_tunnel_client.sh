@@ -20,6 +20,7 @@ sleep 10
 for net_if in $(ls -1 /sys/class/net) ;do
   if [[ ${net_if} == *"dns0"* ]]
   then
+    echo "DNS Tunnel interface created"
     # Fix the routing
     # 1. Add a route to the DNS server through the normal ethernet default gateway
     #   Needs to run as sudo
